@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+
+  postgres:
+    container_name: postgres_sql
+    image: postgres:14
+    environment:
+      POSTGRES_DB: "sql_db"
+      POSTGRES_PASSWORD: "123"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/pgdata
+      - ./init_DB:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+  #    healthcheck:
+  #      test: [ "CMD-SHELL", "pg_isready -U student -d sql_db" ]
+  #      interval: 10s
+  #      timeout: 5s
+  #      retries: 5
+  #      start_period: 10s
+  #    restart: unless-stopped
+
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@example.com"
+      PGADMIN_DEFAULT_PASSWORD: "123"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './data'
+  init_db:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './init_DB'
+  pgadmin_data:
