@@ -9,21 +9,24 @@ if __name__ == "__main__":
         db_port='5432')
 
     orders_full_data_sample = """
-        SELECT * FROM orders;
+        SELECT * FROM orders
+        LIMIT 10;
     """
     orders_full_sample = execute_read_query(connection, orders_full_data_sample)
     print('\n1. orders_full\n\n', orders_full_sample, '\n')
 
     orders_some_attributes_sample = """
         SELECT order_id, order_date, shipped_date, ship_city
-        FROM orders;
+        FROM orders
+        LIMIT 10;
     """
     orders_partly_sample = execute_read_query(connection, orders_some_attributes_sample)
     print('\n2. orders_partly\n\n', orders_partly_sample, '\n')
 
     operation_query = """
         SELECT product_name, unit_price * units_in_stock
-        FROM products;
+        FROM products
+        LIMIT 10;
     """
     total_cost = execute_read_query(connection, operation_query)
     print('\n3. total cost\n\n', total_cost, '\n')
@@ -49,7 +52,8 @@ if __name__ == "__main__":
 
     operation_query = """
         SELECT DISTINCT country, city
-        FROM customers;
+        FROM customers
+        LIMIT 10;
     """
     final_set = execute_read_query(connection, operation_query)
     print('\n6.2. DISTINCT country, city\n\n', final_set, '\n')
@@ -104,7 +108,8 @@ if __name__ == "__main__":
     operation_query = """
         SELECT company_name, country, city
         FROM customers
-        ORDER BY country;
+        ORDER BY country
+        LIMIT 10;
     """
     final_set = execute_read_query(connection, operation_query)
     print('\n12.1. ORDER BY country\n\n', final_set, '\n')
@@ -112,7 +117,8 @@ if __name__ == "__main__":
     operation_query = """
         SELECT company_name, country, city
         FROM customers
-        ORDER BY country DESC, city DESC;
+        ORDER BY country DESC, city DESC
+        LIMIT 10;
     """
     final_set = execute_read_query(connection, operation_query)
     print('\n12.2. ORDER BY country DESC, city DESC\n\n', final_set, '\n')
