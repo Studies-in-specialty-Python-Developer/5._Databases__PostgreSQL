@@ -210,5 +210,21 @@ if __name__ == "__main__":
     final_set = execute_query(my_new_db_connection, operation_query)
     print('\n15. INSERT INTO author_book\n\n', final_set, '\n')
 
-# Пропоную Вам самостійно первірити правильність заповнення нашої невеликої БД - сформуйте запит який поверне для кожного автора всі його книжки з видавництвом, яке їх видало. До того ж - ще раз згадаєте українських авторів, а не тільки JOIN)))
+    operation_query = """
+        SELECT 
+            author.first_name,
+            author.last_name,
+            book.title      AS book_title,
+            publisher.title AS publ_title
+        FROM author
+            JOIN author_book ON author.id = author_book.author_id
+            JOIN book ON book.id = author_book.book_id
+            JOIN publisher ON book.publisher_id = publisher.id
+        ORDER BY author.last_name;
+    """
+    final_set = execute_read_query(my_new_db_connection, operation_query)
+    print('\n16. Author, book, publisher\n\n', final_set, '\n')
 
+# Пропоную Вам самостійно первірити правильність заповнення нашої невеликої БД - сформуйте запит
+# який поверне для кожного автора всі його книжки з видавництвом, яке їх видало. До того ж - ще
+# раз згадаєте українських авторів, а не тільки JOIN)))
