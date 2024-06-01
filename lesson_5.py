@@ -223,8 +223,26 @@ if __name__ == "__main__":
         ORDER BY author.last_name;
     """
     final_set = execute_read_query(my_new_db_connection, operation_query)
-    print('\n16. Author, book, publisher\n\n', final_set, '\n')
+    print('\n16. Get author, book, publisher\n\n', final_set, '\n')
 
-# Пропоную Вам самостійно первірити правильність заповнення нашої невеликої БД - сформуйте запит
-# який поверне для кожного автора всі його книжки з видавництвом, яке їх видало. До того ж - ще
-# раз згадаєте українських авторів, а не тільки JOIN)))
+    operation_query = """
+        UPDATE author
+            SET patronymic = 'Вікторович'
+        WHERE last_name = 'Жадан' and first_name = 'Сергій';
+    """
+    final_set = execute_query(my_new_db_connection, operation_query)
+    print('\n17. UPDATE data\n\n', final_set, '\n')
+
+    operation_query = """
+        UPDATE publisher
+        SET cooperation_status = 'in_progress';
+    """
+    final_set = execute_query(my_new_db_connection, operation_query)
+
+    operation_query = """
+        INSERT INTO publisher (title)
+            VALUES ('Країна мрій')
+        RETURNING *;
+    """
+    final_set = execute_read_query(my_new_db_connection, operation_query)
+    print('\n18. RETURNING\n\n', final_set, '\n')
